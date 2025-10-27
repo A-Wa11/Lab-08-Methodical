@@ -1,0 +1,40 @@
+public static boolean getYNConfirm(Scanner pipe, String prompt) {
+    String response;
+    String trash;
+    boolean valid = false;
+    boolean result = false;
+
+    do {
+        System.out.print("\n" + prompt + " [Y/N]: ");
+        if (pipe.hasNext()) {
+            response = pipe.next();
+            pipe.nextLine(); // clear remainder of the line (newline fix)
+
+            if (response.length() > 0) {
+                char c = response.charAt(0);
+                if (c == 'Y' || c == 'y') {
+                    result = true;
+                    valid = true;
+                } else if (c == 'N' || c == 'n') {
+                    result = false;
+                    valid = true;
+                } else {
+                    System.out.println("Invalid entry. Please enter Y or N. You entered: " + response);
+                }
+            } else {
+                // should be rare; treat as trash
+                trash = response;
+                System.out.println("Invalid entry. Please enter Y or N. You entered: " + trash);
+            }
+        } else {
+            // no token available; attempt to clear and notify
+            if (pipe.hasNextLine()) pipe.nextLine();
+            System.out.println("Invalid entry. Please enter Y or N.");
+        }
+    } while (!valid);
+
+    return result;
+}
+
+void main() {
+}
