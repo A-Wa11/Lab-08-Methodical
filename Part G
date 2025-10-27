@@ -1,0 +1,34 @@
+public static String getRegExString(Scanner pipe, String prompt, String regEx) {
+    if (regEx == null) {
+        throw new IllegalArgumentException("regEx cannot be null.");
+    }
+
+    String input;
+    String trash;
+    boolean valid = false;
+
+    do {
+        System.out.print("\n" + prompt + ": ");
+        if (pipe.hasNext()) {
+            input = pipe.next();
+            pipe.nextLine(); // clear remainder of the line (newline fix)
+
+            if (input.matches(regEx)) {
+                valid = true;
+                return input;
+            } else {
+                System.out.println("Invalid entry. Please enter a value that matches the pattern: " + regEx + ". You entered: " + input);
+            }
+        } else {
+            // no token available; attempt to clear and notify
+            if (pipe.hasNextLine()) pipe.nextLine();
+            System.out.println("Invalid entry. Please enter a value that matches the pattern: " + regEx);
+        }
+    } while (!valid);
+
+    // unreachable but required by compiler
+    return "";
+}
+
+void main() {
+}
