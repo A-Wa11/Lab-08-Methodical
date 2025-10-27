@@ -1,0 +1,48 @@
+import java.util.Scanner;
+
+class CheckOut {
+    public static void main(String[] args) {
+        Scanner in = new Scanner(System.in);
+        double total = 0.0;
+
+        do {
+            double price = getRangedDouble(in, "Enter price (0.50 - 10.00): ", 0.50, 10.00);
+            total += price;
+        } while (getYNConfirm(in, "Do you have another item (Y/N)? "));
+
+        System.out.printf("Total cost: $%.2f%n", total);
+        in.close();
+    }
+
+    public static double getRangedDouble(Scanner pipe, String prompt, double low, double high) {
+        double value;
+        while (true) {
+            System.out.print(prompt);
+            if (pipe.hasNextDouble()) {
+                value = pipe.nextDouble();
+                pipe.nextLine(); // clear the rest of the line (newline fix)
+                if (value >= low && value <= high) {
+                    return value;
+                } else {
+                    System.out.printf("Value out of range. Enter a value between %.2f and %.2f.%n", low, high);
+                }
+            } else {
+                String trash = pipe.nextLine(); // read and discard invalid input
+                System.out.println("Invalid number: \"" + trash + "\". Please try again.");
+            }
+        }
+    }
+
+    public static boolean getYNConfirm(Scanner pipe, String prompt) {
+        while (true) {
+            System.out.print(prompt);
+            String response = pipe.nextLine().trim();
+            if (!response.isEmpty()) {
+                char c = Character.toUpperCase(response.charAt(0));
+                if (c == 'Y') return true;
+                if (c == 'N') return false;
+            }
+            System.out.println("Please enter Y or N.");
+        }
+    }
+}
