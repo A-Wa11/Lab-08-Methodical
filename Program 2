@@ -1,0 +1,52 @@
+ import java.util.Scanner;
+
+public class SafeInput {
+
+    public static int getInt(Scanner pipe, String prompt) {
+        int value = 0;
+        boolean valid = false;
+        String trash;
+        do {
+            System.out.print("\n" + prompt + ": ");
+            if (pipe.hasNextInt()) {
+                value = pipe.nextInt();
+                pipe.nextLine(); // clear newline left by nextInt()
+                valid = true;
+            } else {
+                trash = pipe.next(); // consume bad token
+                System.out.println("Invalid entry. Please enter an integer. You entered: " + trash);
+            }
+        } while (!valid);
+        return value;
+    }
+
+    public static double getDouble(Scanner pipe, String prompt) {
+        double value = 0.0;
+        boolean valid = false;
+        String trash;
+        do {
+            System.out.print("\n" + prompt + ": ");
+            if (pipe.hasNextDouble()) {
+                value = pipe.nextDouble();
+                pipe.nextLine(); // clear newline left by nextDouble()
+                valid = true;
+            } else {
+                trash = pipe.next(); // consume bad token
+                System.out.println("Invalid entry. Please enter a double. You entered: " + trash);
+            }
+        } while (!valid);
+        return value;
+    }
+
+    public static String getNonZeroLenString(Scanner pipe, String prompt) {
+        String input = "";
+        do {
+            System.out.print("\n" + prompt + ": ");
+            input = pipe.nextLine();
+            if (input.length() == 0) {
+                System.out.println("Invalid entry. Please enter a non-empty string.");
+            }
+        } while (input.length() == 0);
+        return input;
+    }
+}
