@@ -1,0 +1,24 @@
+
+public class DevTest {
+    public static void main(String[] args) {
+        Scanner in = new Scanner(System.in);
+        int value = getInt(in, "Enter any integer: ");
+        System.out.println("You entered: " + value);
+        in.close();
+    }
+
+    public static int getInt(Scanner pipe, String prompt) {
+        int result;
+        while (true) {
+            System.out.print(prompt);
+            if (pipe.hasNextInt()) {
+                result = pipe.nextInt();
+                pipe.nextLine(); // clear the rest of the line (newline fix)
+                return result;
+            } else {
+                String trash = pipe.nextLine(); // read and discard invalid input
+                System.out.println("Invalid integer: \"" + trash + "\". Please try again.");
+            }
+        }
+    }
+}
